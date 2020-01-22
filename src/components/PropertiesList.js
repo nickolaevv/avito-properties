@@ -8,6 +8,7 @@ class PropertiesList extends Component {
       listIsEmpty: true
     }
     this.getPropertiesList = this.getPropertiesList.bind(this);
+    this.openFullInfoWindow = this.openFullInfoWindow.bind(this);
     this.getPropertiesList()
   }
 
@@ -17,8 +18,8 @@ class PropertiesList extends Component {
         this.setState({
           propertiesFullList: response.data
         })
-        console.log(response.data)
-        console.log(this.state.propertiesFullList)
+        console.log(response.data);
+        console.log(this.state.propertiesFullList);
         if (this.state.propertiesFullList.length === 0) {
           this.setState({
             listIsEmpty: true
@@ -31,6 +32,12 @@ class PropertiesList extends Component {
       })
   }
 
+  openFullInfoWindow(id) {
+    this.props.sendId(id);
+    this.props.history.push(`/${id}`);
+    console.log(id);
+  }
+
   render() {
     return(
       <div>
@@ -40,20 +47,19 @@ class PropertiesList extends Component {
           <div>
           {
             this.state.propertiesFullList.map(propertyId => (
-              <div key = {propertyId.id} className = 'flexRow'>
+              <div key = {propertyId.id} className = 'flexRow' onClick = {() => this.openFullInfoWindow(propertyId.id)}>
                 <img src = {propertyId.previewImage} alt = 'Изображение не загрузилось...'/>
                 <div>
-                 <div> {propertyId.title} </div>
-                 <div> {propertyId.address} </div>
-                 <div> {propertyId.id} </div>
-                 <div> {propertyId.price} </div>
+                   <div> {propertyId.title} </div>
+                   <div> {propertyId.address} </div>
+                   <div> №{propertyId.id} </div>
+                   <div> {propertyId.price} </div>
                 </div>
               </div>
             ))
           }
           </div>
       }
-      hahaha
       </div>
     )
   }
