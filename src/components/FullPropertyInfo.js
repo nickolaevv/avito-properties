@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import ImageView from './ImageView';
+import SellerIcon from './icons/SellerIcon';
+import LocationIcon from './icons/LocationIcon';
 
 class FullPropertyInfo extends Component {
   constructor(props){
@@ -17,7 +20,6 @@ class FullPropertyInfo extends Component {
         this.setState({
           fullInfoList: response.data
         })
-        console.log(this.state.fullInfoList)
         if (this.state.fullInfoList.length == 0) {
           this.setState({
             listIsEmpty: true
@@ -35,18 +37,15 @@ class FullPropertyInfo extends Component {
         {this.state.listIsEmpty ?
           <div> No full data </div>
           :
-          <div>
-            <img src = {this.state.fullInfoList[0].images[0]}/>
-            <img src = {this.state.fullInfoList[0].images[1]}/>
-            <img src = {this.state.fullInfoList[0].images[2]}/>
-            <img src = {this.state.fullInfoList[0].images[3]}/>
-            <div> {this.state.fullInfoList[0].id} </div>
-            <div> {this.state.fullInfoList[0].title} </div>
-            <div> {this.state.fullInfoList[0].id} </div>
-            <div> {this.state.fullInfoList[0].address} </div>
-            <div> {this.state.fullInfoList[0].price} </div>
-            <div> {this.state.fullInfoList[0].description} </div>
-            <div> {this.state.fullInfoList[0].sellerName} </div>
+          <div className = 'flexAlignCenter' style = {{height:'100vh'}}>
+            <ImageView imageArray = {this.state.fullInfoList[0].images} imageId = {this.state.fullInfoList[0].id}/>
+            <div className = 'full-advert-info'>
+              <div style = {{fontSize:'20px', marginBottom:'15px',marginTop:'15px'}}><SellerIcon/> {this.state.fullInfoList[0].sellerName} </div>
+              <div style = {{fontSize:'30px', marginBottom:'15px'}}> {this.state.fullInfoList[0].title} </div>
+              <div style = {{fontSize:'20px', color:'#989898', marginBottom:'15px'}}><LocationIcon/> {this.state.fullInfoList[0].address} </div>
+              <div style = {{fontSize:'20px', fontWeight:'bold',marginBottom:'15px'}}> {this.state.fullInfoList[0].price} </div>
+              <div style = {{fontSize:'20px'}}> {this.state.fullInfoList[0].description} </div>
+            </div>
           </div>
 
         }
